@@ -3,13 +3,15 @@ import Router from 'vue-router'
 import Forbidden from '@/components/Forbidden'
 import NotFound from '@/components/NotFound'
 import Login from '@/components/auth/Login'
+import Dashboard from '@/components/Dashboard'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/'
+      path: '/',
+      redirect: '/dashboard'
       // meta: {
       //   roles: ['authenticated']
       // }
@@ -17,6 +19,10 @@ export default new Router({
     {
       path: '/login',
       component: Login
+    },
+    {
+      path: '/dashboard',
+      component: Dashboard
     },
     {
       path: '/forbidden',

@@ -6,7 +6,7 @@
     width: 100%;
     height: 100%;
     z-index: 100;
-    background-color: #fff;
+    background-color: #181c20;
   }
 </style>
 <template>
@@ -15,7 +15,7 @@
       <v-layout fill-height align-center row justify-center>
         <v-flex xs3>
           <v-card>
-            <h5 class="text-xs-center pa-2" style="background-color: #2D3540">
+            <h5 class="text-xs-center pa-2">
               <img style="height: 60px; margin-top: 2px;"
              src="/static/imgs/certm2.png"
              alt="avatar">

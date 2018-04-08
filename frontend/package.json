@@ -15,11 +15,12 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "chart.js": "^2.7.2",
     "vue": "^2.5.2",
     "vue-axios": "^2.0.2",
+    "vue-chartjs": "^3.3.1",
     "vue-moment": "^3.2.0",
     "vue-router": "^3.0.1",
-    "vuechart": "^18.3.13",
     "vuetify": "^1.0.13"
   },
   "devDependencies": {

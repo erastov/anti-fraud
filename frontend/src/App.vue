@@ -24,20 +24,35 @@
 </style>
 <template>
   <v-app id="inspire">
-    <v-toolbar style="background-color: #2D3540" dark app fixed clipped-left>
-      <a href="#/">
-        <img style="height: 45px; margin-top: 2px;"
-             src="/static/imgs/certm_horiz.png"
-             alt="logo">
-      </a>
-      <v-btn class="my-font" flat dark href="#/generate_csr">
-        <v-icon class="btn-icon">dashboard</v-icon>
-        Dashboard
-      </v-btn>
-      <v-btn class="my-font" flat dark href="#/import">
-        <v-icon class="btn-icon">cloud_upload</v-icon>
-        Import
-      </v-btn>
+    <v-navigation-drawer
+      clipped
+      fixed
+      v-model="drawer"
+      app
+      dark
+    >
+      <v-list dense>
+        <v-list-tile @click="">
+          <v-list-tile-action>
+            <v-icon>dashboard</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Dashboard</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile @click="">
+          <v-list-tile-action>
+            <v-icon>settings</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Settings</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+    <v-toolbar app fixed clipped-left dark>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-title>ANTIFRAUD</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-menu offset-y>
         <v-btn class="my-font" dark flat slot="activator" style="color: #FF8C00">
@@ -53,9 +68,8 @@
     </v-toolbar>
     <v-content class="white">
       <v-container fluid>
-        <router-view style="max-width: 1200px; color:black"></router-view>
+        <router-view></router-view>
       </v-container>
-      <notifications position="bottom left" group="foo"/>
     </v-content>
   </v-app>
 </template>
@@ -76,7 +90,7 @@
     data() {
       return {
         appName: 'ANTIFRAUD',
-        drawer: false,
+        drawer: true,
         get username() {
           return localStorage.getItem('_username')
         }
