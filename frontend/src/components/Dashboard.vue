@@ -1,23 +1,86 @@
 <template>
-  <v-container  fluid grid-list-md>
+  <v-container fluid grid-list-md>
     <v-layout row wrap>
-      <v-flex xs4>
-        <line-chart style="height: 95%;"></line-chart>
+      <v-flex xs3>
+        <v-card color="blue-grey darken-2" class="white--text">
+          <v-card-title>
+            <div class="headline">Сегодня: 30541 транз.</div>
+            <div>Прогноз: 47540 транз.</div>
+          </v-card-title>
+        </v-card>
+      </v-flex>
+      <v-flex xs3>
+        <v-card color="cyan darken-2" class="white--text">
+          <v-card-title>
+            <div class="headline">Месяц: 1 млн. транз.</div>
+            <v-spacer></v-spacer>
+            <div>Прогноз: 3 млн. транз.</div>
+          </v-card-title>
+        </v-card>
+      </v-flex>
+      <v-flex xs3>
+        <v-card color="purple" class="white--text">
+          <v-card-title>
+            <div class="headline">Сегодня: 300400 ₽</div><v-spacer></v-spacer>
+            <div>Прогноз: 500400 ₽</div>
+          </v-card-title>
+        </v-card>
+      </v-flex>
+      <v-flex xs3>
+        <v-card color="red lighten-1" class="white--text">
+          <v-card-title>
+             <div class="headline">Месяц: 4 млн. ₽</div><v-spacer></v-spacer>
+            <div>Прогноз: 11 млн. ₽</div>
+          </v-card-title>
+        </v-card>
       </v-flex>
       <v-flex xs4>
-        <line-chart style="height: 95%;"></line-chart>
+        <v-card>
+          <line-chart style="height: 240px;"
+                      :datasets="chartData"
+                      :labels="labels">
+          </line-chart>
+        </v-card>
       </v-flex>
       <v-flex xs4>
-        <line-chart style="height: 95%;"></line-chart>
+        <v-card>
+          <line-chart style="height: 240px;"
+                      :datasets="chartData2"
+                      :labels="labels">
+          </line-chart>
+        </v-card>
       </v-flex>
       <v-flex xs4>
-        <line-chart style="height: 95%;"></line-chart>
+        <v-card>
+          <line-chart style="height: 240px;"
+                      :datasets="chartData3"
+                      :labels="labels">
+          </line-chart>
+        </v-card>
       </v-flex>
       <v-flex xs4>
-        <line-chart style="height: 95%;"></line-chart>
+        <v-card>
+          <line-chart style="height: 240px;"
+                      :datasets="chartData4"
+                      :labels="labels">
+          </line-chart>
+        </v-card>
       </v-flex>
       <v-flex xs4>
-        <line-chart style="height: 95%;"></line-chart>
+        <v-card>
+          <line-chart style="height: 240px;"
+                      :datasets="chartData5"
+                      :labels="labels">
+          </line-chart>
+        </v-card>
+      </v-flex>
+      <v-flex xs4>
+        <v-card>
+          <line-chart style="height: 240px;"
+                      :datasets="chartData6"
+                      :labels="labels">
+          </line-chart>
+        </v-card>
       </v-flex>
       <v-flex xs12>
         <v-data-table
@@ -41,30 +104,55 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  import VueCharts from 'vue-chartjs'
-
-  Vue.component('line-chart', {
-    extends: VueCharts.Line,
-    mounted() {
-      this.renderChart({
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [
-          {
-            label: 'Data One',
-            backgroundColor: '#f87979',
-            data: [40, 39, 10, 40, 39, 80, 40]
-          }
-        ]
-      }, {responsive: true, maintainAspectRatio: false})
-    }
-
-  })
+  import LineChart from './charts/LineChart'
 
   export default {
     name: "dashboard",
+    components: {LineChart},
     data: () => ({
-      chartData: {},
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      chartData: [
+        {
+          label: 'Кол-во транзакций в час',
+          backgroundColor: '#11f8f1',
+          data: [40, 39, 10, 40, 39, 80, 40]
+        }
+      ],
+      chartData2: [
+        {
+          label: 'Кол-во транзакций в сутки',
+          backgroundColor: '#4ae4f8',
+          data: [40, 39, 10, 40, 39, 80, 40]
+        }
+      ],
+      chartData3: [
+        {
+          label: 'Кол-во транзакций в месяц',
+          backgroundColor: '#13c3f8',
+          data: [40, 39, 10, 40, 39, 80, 40]
+        }
+      ],
+      chartData4: [
+        {
+          label: 'Сумма транзакций в час',
+          backgroundColor: '#c4f8c8',
+          data: [40, 39, 10, 40, 39, 80, 40]
+        }
+      ],
+      chartData5: [
+        {
+          label: 'Сумма транзакций в сутки',
+          backgroundColor: '#94f8ae',
+          data: [40, 39, 10, 40, 39, 80, 40]
+        }
+      ],
+      chartData6: [
+        {
+          label: 'Сумма транзакций в месяц',
+          backgroundColor: '#1af881',
+          data: [40, 39, 10, 40, 39, 80, 40]
+        }
+      ],
       headers: [
         {
           text: 'Dessert (100g serving)',
@@ -105,15 +193,6 @@
           carbs: 23,
           protein: 6.0,
           iron: '7%'
-        },
-        {
-          value: false,
-          name: 'Cupcake',
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: '8%'
         }
       ]
     })
