@@ -22,7 +22,7 @@
         <v-card color="purple" class="white--text">
           <v-card-title>
             <div class="headline">Сегодня: 300400 ₽</div><v-spacer></v-spacer>
-            <div>Прогноз: 500400 ₽</div>
+            <div>Прогноз: 500410 ₽</div>
           </v-card-title>
         </v-card>
       </v-flex>
