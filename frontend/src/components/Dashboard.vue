@@ -4,7 +4,7 @@
       <v-flex xs3>
         <v-card color="blue-grey darken-2" class="white--text">
           <v-card-title>
-            <div class="headline">Сегодня: 30541 транз.</div>
+            <div class="headline">Сегодня: 301 транз.</div>
             <div>Прогноз: 47540 транз.</div>
           </v-card-title>
         </v-card>
@@ -87,6 +87,7 @@
           :headers="headers"
           :items="items"
           hide-actions
+          hide-headers
           class="elevation-1"
           dark
         >
