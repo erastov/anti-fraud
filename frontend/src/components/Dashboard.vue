@@ -88,6 +88,7 @@
           :items="items"
           hide-actions
           class="elevation-1"
+          dark
         >
           <template slot="items" slot-scope="props">
             <td>{{ props.item.name }}</td>
