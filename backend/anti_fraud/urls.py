@@ -21,11 +21,13 @@ from rest_framework import routers
 from api.views import (
     LoginView,
     UserSettings,
-    LogoutView
+    LogoutView,
+    CurrencyViewSet
     )
 from django.conf.urls.static import static
 
 router = routers.SimpleRouter()
+router.register(r'currencies', CurrencyViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -33,6 +35,7 @@ urlpatterns = [
     url(r'^api/login/$', LoginView.as_view()),
     url(r'^api/logout$', LogoutView.as_view()),
     url(r'^api/user-settings/$', UserSettings.as_view()),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

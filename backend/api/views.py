@@ -4,7 +4,32 @@ from django.contrib.auth import authenticate, login, logout
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import UserSerializer
+from rest_framework import viewsets, status
+from .serializers import UserSerializer, CurrencySerializer
+import pusher
+from api.models import Currency
+
+pusher_client = pusher.Pusher(
+  app_id='509691',
+  key='16b0026a0399f224c710',
+  secret='4b7e587592574869093d',
+  cluster='eu',
+  ssl=True
+)
+
+
+class CurrencyViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated, ]
+    queryset = Currency.objects.all()
+    serializer_class = CurrencySerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        pusher_client.trigger('my-channel', 'my-event', {'message': 'hello world'})
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class LoginView(APIView):

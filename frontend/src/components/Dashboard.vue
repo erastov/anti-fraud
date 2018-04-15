@@ -107,6 +107,16 @@
 
 <script>
   import LineChart from './charts/LineChart'
+  import Pusher from 'pusher-js'
+
+  const socket = new Pusher('16b0026a0399f224c710', {
+        cluster: 'eu',
+        encrypted: true
+      })
+  const channel = socket.subscribe('my-channel')
+  channel.bind('my-event', function(data) {
+      alert(data.message)
+    })
 
   export default {
     name: "dashboard",
