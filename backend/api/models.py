@@ -81,8 +81,14 @@ class Card(models.Model):
 
 class Transaction(models.Model):
 
+    STATUS_CHOICES = (
+        ('L', 'Lock'),
+        ('A', 'Approve'),
+        ('H', 'Hold'),
+    )
     number = models.UUIDField()
     source_account = models.ForeignKey(Account, on_delete=models.PROTECT, related_name='outgoing_transactions')
     destination_account = models.ForeignKey(Account, on_delete=models.PROTECT, related_name='incoming_transactions')
     amount = models.DecimalField(max_digits=6, decimal_places=2)
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES)
     score = models.PositiveSmallIntegerField()
