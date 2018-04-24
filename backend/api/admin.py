@@ -9,7 +9,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
-    list_display = ['number', 'customer']
+    list_display = ['id', 'customer']
 
 
 @admin.register(AccountType)
@@ -29,4 +29,4 @@ class CardAdmin(admin.ModelAdmin):
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-    list_display = ['number', 'source_account', 'destination_account', 'score']
+    list_display = ['id', 'source_account', 'destination_account', 'score']

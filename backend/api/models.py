@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import RegexValidator
+import uuid
 
 
 class Customer(models.Model):
@@ -17,7 +18,6 @@ class Customer(models.Model):
     )
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                  message="Phone number must be entered in the format: '+999999999'")
-
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
@@ -32,10 +32,16 @@ class Customer(models.Model):
     marital_status = models.CharField(max_length=1, choices=MARITAL_CHOICES)
     reputation_score = models.PositiveSmallIntegerField()
 
+    def __str__(self):
+        return '{0} {1}'.format(self.first_name, self.last_name)
+
 
 class AccountType(models.Model):
 
     name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return str(self.name)
 
 
 class Currency(models.Model):
@@ -43,15 +49,21 @@ class Currency(models.Model):
     name = models.CharField(max_length=3)
     full_name = models.CharField(max_length=50)
 
+    def __str__(self):
+        return str(self.name)
+
 
 class Account(models.Model):
 
-    number = models.UUIDField()
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
-    balance = models.DecimalField(max_digits=6, decimal_places=2)
+    balance = models.DecimalField(max_digits=20, decimal_places=2)
     type = models.ForeignKey(AccountType, on_delete=models.PROTECT)
     currency = models.ForeignKey(Currency, on_delete=models.PROTECT)
     credit = models.BooleanField(default=False)
+
+    def __str__(self):
+        return '{0} {1}'.format(self.id, self.customer)
 
 
 class Card(models.Model):
@@ -76,7 +88,10 @@ class Card(models.Model):
     issue_date = models.DateTimeField()
     expiration_date = models.DateTimeField()
     status = models.CharField(max_length=1, choices=STATUS_CHOICES)
-    frozen_expiration_date = models.DateTimeField()
+    frozen_expiration_date = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return str(self.number)
 
 
 class Transaction(models.Model):
@@ -86,9 +101,20 @@ class Transaction(models.Model):
         ('A', 'Approve'),
         ('H', 'Hold'),
     )
-    number = models.UUIDField()
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    time = models.DateTimeField(auto_now_add=True)
+    source_card = models.ForeignKey(Card, on_delete=models.PROTECT, related_name='outgoing_transactions', null=True)
+    destination_card = models.ForeignKey(
+        Card,
+        on_delete=models.PROTECT,
+        related_name='incoming_transactions',
+        null=True
+    )
     source_account = models.ForeignKey(Account, on_delete=models.PROTECT, related_name='outgoing_transactions')
     destination_account = models.ForeignKey(Account, on_delete=models.PROTECT, related_name='incoming_transactions')
     amount = models.DecimalField(max_digits=6, decimal_places=2)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES)
     score = models.PositiveSmallIntegerField()
+
+    def __str__(self):
+        return '{0} {1} {2}'.format(self.id, self.source_account, self.destination_account)
