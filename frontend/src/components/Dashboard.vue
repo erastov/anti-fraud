@@ -21,7 +21,8 @@
       <v-flex xs3>
         <v-card color="purple" class="white--text">
           <v-card-title>
-            <div class="headline">Сегодня: 300400 ₽</div><v-spacer></v-spacer>
+            <div class="headline">Сегодня: 300400 ₽</div>
+            <v-spacer></v-spacer>
             <div>Прогноз: 500410 ₽</div>
           </v-card-title>
         </v-card>
@@ -29,57 +30,41 @@
       <v-flex xs3>
         <v-card color="red lighten-1" class="white--text">
           <v-card-title>
-             <div class="headline">Месяц: 4 млн. ₽</div><v-spacer></v-spacer>
+            <div class="headline">Месяц: 4 млн. ₽</div>
+            <v-spacer></v-spacer>
             <div>Прогноз: 11 млн. ₽</div>
           </v-card-title>
         </v-card>
       </v-flex>
       <v-flex xs4>
         <v-card>
-          <line-chart style="height: 240px;"
-                      :datasets="chartData"
-                      :labels="labels">
+          <line-chart style="height: 240px;"></line-chart>
+        </v-card>
+      </v-flex>
+      <v-flex xs4>
+        <v-card>
+          <line-chart style="height: 240px;"></line-chart>
+        </v-card>
+      </v-flex>
+      <v-flex xs4>
+        <v-card>
+          <line-chart style="height: 240px;" :chart-data="datacollection">
           </line-chart>
         </v-card>
       </v-flex>
       <v-flex xs4>
         <v-card>
-          <line-chart style="height: 240px;"
-                      :datasets="chartData2"
-                      :labels="labels">
-          </line-chart>
+          <line-chart style="height: 240px;"></line-chart>
         </v-card>
       </v-flex>
       <v-flex xs4>
         <v-card>
-          <line-chart style="height: 240px;"
-                      :datasets="chartData3"
-                      :labels="labels">
-          </line-chart>
+          <line-chart style="height: 240px;"></line-chart>
         </v-card>
       </v-flex>
       <v-flex xs4>
         <v-card>
-          <line-chart style="height: 240px;"
-                      :datasets="chartData4"
-                      :labels="labels">
-          </line-chart>
-        </v-card>
-      </v-flex>
-      <v-flex xs4>
-        <v-card>
-          <line-chart style="height: 240px;"
-                      :datasets="chartData5"
-                      :labels="labels">
-          </line-chart>
-        </v-card>
-      </v-flex>
-      <v-flex xs4>
-        <v-card>
-          <line-chart style="height: 240px;"
-                      :datasets="chartData6"
-                      :labels="labels">
-          </line-chart>
+          <line-chart style="height: 240px;"></line-chart>
         </v-card>
       </v-flex>
       <v-flex xs12>
@@ -110,61 +95,18 @@
   import Pusher from 'pusher-js'
 
   const socket = new Pusher('16b0026a0399f224c710', {
-        cluster: 'eu',
-        encrypted: true
-      })
+    cluster: 'eu',
+    encrypted: true
+  })
   const channel = socket.subscribe('my-channel')
-  channel.bind('my-event', function(data) {
-      alert(data.message)
-    })
 
   export default {
     name: "dashboard",
     components: {LineChart},
     data: () => ({
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      chartData: [
-        {
-          label: 'Кол-во транзакций в час',
-          backgroundColor: '#11f8f1',
-          data: [40, 39, 10, 40, 39, 80, 40]
-        }
-      ],
-      chartData2: [
-        {
-          label: 'Кол-во транзакций в сутки',
-          backgroundColor: '#4ae4f8',
-          data: [40, 39, 10, 40, 39, 80, 40]
-        }
-      ],
-      chartData3: [
-        {
-          label: 'Кол-во транзакций в месяц',
-          backgroundColor: '#13c3f8',
-          data: [40, 39, 10, 40, 39, 80, 40]
-        }
-      ],
-      chartData4: [
-        {
-          label: 'Сумма транзакций в час',
-          backgroundColor: '#c4f8c8',
-          data: [40, 39, 10, 40, 39, 80, 40]
-        }
-      ],
-      chartData5: [
-        {
-          label: 'Сумма транзакций в сутки',
-          backgroundColor: '#94f8ae',
-          data: [40, 39, 10, 40, 39, 80, 40]
-        }
-      ],
-      chartData6: [
-        {
-          label: 'Сумма транзакций в месяц',
-          backgroundColor: '#1af881',
-          data: [40, 39, 10, 40, 39, 80, 40]
-        }
-      ],
+      datacollection: null,
+      timestamps: [],
+      amounts: [],
       headers: [
         {
           text: 'Dessert (100g serving)',
@@ -207,7 +149,31 @@
           iron: '7%'
         }
       ]
-    })
+    }),
+    methods: {
+      fetchData() {
+        channel.bind('my-event', data => {
+          let transaction = data.message
+          this.timestamps.push(transaction.time)
+          this.amounts.push(transaction.amount)
+
+          //The Chart's dataset is updated with the latest data gotten from Pusher
+          this.datacollection = {
+            labels: this.timestamps,
+            datasets: [
+              {
+                label: 'Amount',
+                backgroundColor: '#11f8f1',
+                data: this.amounts
+              }
+            ]
+          }
+        })
+      }
+    },
+    created () {
+      this.fetchData()
+    }
   }
 </script>
 

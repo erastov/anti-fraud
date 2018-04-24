@@ -4,32 +4,19 @@ from django.contrib.auth import authenticate, login, logout
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import viewsets, status
-from .serializers import UserSerializer, CurrencySerializer
-import pusher
-from api.models import Currency
+from .serializers import UserSerializer, TransactionSerializer
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from .signals import Pusher
+from .models import Transaction
 
-pusher_client = pusher.Pusher(
-  app_id='509691',
-  key='16b0026a0399f224c710',
-  secret='4b7e587592574869093d',
-  cluster='eu',
-  ssl=True
-)
+pusher = Pusher()
 
 
-class CurrencyViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated, ]
-    queryset = Currency.objects.all()
-    serializer_class = CurrencySerializer
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        pusher_client.trigger('my-channel', 'my-event', {'message': 'hello world'})
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+@receiver(post_save, sender=Transaction)
+def service_post_save(sender, instance, **kwargs):
+    serializer = TransactionSerializer(instance)
+    pusher.send_message(serializer.data)
 
 
 class LoginView(APIView):

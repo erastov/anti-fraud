@@ -1,19 +1,42 @@
 <script>
   import VueCharts from 'vue-chartjs'
 
+  const {reactiveProp} = VueCharts.mixins
   export default {
     name: 'line-chart',
+    mixins: [reactiveProp],
     extends: VueCharts.Line,
-    props: ['labels', 'datasets'],
+    props: ['chartData'],
+    data() {
+      return {
+        options: { //Chart.js options
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              },
+              gridLines: {
+                display: true
+              }
+            }],
+            xAxes: [{
+              display: false,
+              gridLines: {
+                display: false
+              }
+            }]
+          },
+          legend: {
+            display: true
+          },
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      }
+    },
     mounted() {
-      this.renderChart({
-        labels: this.labels,
-        datasets: this.datasets
-      }, {responsive: true, maintainAspectRatio: false})
+      this.renderChart(this.chartData, this.options)
     }
   }
 </script>
 
-<style scoped>
-
-</style>
