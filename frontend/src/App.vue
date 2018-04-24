@@ -32,7 +32,7 @@
       dark
     >
       <v-list dense>
-        <v-list-tile @click="">
+        <v-list-tile href="#/dashboard">
           <v-list-tile-action>
             <v-icon>dashboard</v-icon>
           </v-list-tile-action>
@@ -40,7 +40,23 @@
             <v-list-tile-title>Dashboard</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="">
+        <v-list-tile href="#/transactions">
+          <v-list-tile-action>
+            <v-icon>payment</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Transactions</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile href="#/customers">
+          <v-list-tile-action>
+            <v-icon>account_box</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Customers</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile href="#/settings">
           <v-list-tile-action>
             <v-icon>settings</v-icon>
           </v-list-tile-action>

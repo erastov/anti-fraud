@@ -4,6 +4,11 @@ import Forbidden from '@/components/Forbidden'
 import NotFound from '@/components/NotFound'
 import Login from '@/components/auth/Login'
 import Dashboard from '@/components/Dashboard'
+import TransactionsList from '@/components/transactions/TransactionsList'
+import TransactionDetail from '@/components/transactions/TransactionDetail'
+import CustomerDetail from '@/components/customers/CustomerDetail'
+import CustomersList from '@/components/customers/CustomersList'
+import SettingsPanel from '@/components/settings/SettingsPanel'
 
 Vue.use(Router)
 
@@ -23,6 +28,26 @@ export default new Router({
     {
       path: '/dashboard',
       component: Dashboard
+    },
+    {
+      path: '/transactions',
+      component: TransactionsList
+    },
+    {
+      path: '/transaction',
+      component: TransactionDetail
+    },
+    {
+      path: '/customers',
+      component: CustomersList
+    },
+    {
+      path: '/customer',
+      component: CustomerDetail
+    },
+    {
+      path: '/settings',
+      component: SettingsPanel
     },
     {
       path: '/forbidden',
