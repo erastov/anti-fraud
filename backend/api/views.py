@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework import viewsets, views
 from .serializers import UserSerializer, TransactionSerializer
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -19,7 +19,14 @@ def service_post_save(sender, instance, **kwargs):
     pusher.send_message(serializer.data)
 
 
-class LoginView(APIView):
+class TransactionViewSet(viewsets.ModelViewSet):
+
+    permission_classes = [IsAuthenticated, ]
+    queryset = Transaction.objects.all().order_by('time')
+    serializer_class = TransactionSerializer
+
+
+class LoginView(views.APIView):
 
     permission_classes = ()
 
@@ -35,7 +42,7 @@ class LoginView(APIView):
             return Response(status=401)
 
 
-class LogoutView(APIView):
+class LogoutView(views.APIView):
 
     permission_classes = ()
 
@@ -47,7 +54,7 @@ class LogoutView(APIView):
         return self.get(request, *args, **kwargs)
 
 
-class UserSettings(APIView):
+class UserSettings(views.APIView):
 
     permission_classes = (IsAuthenticated,)
     """

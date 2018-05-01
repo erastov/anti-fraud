@@ -21,11 +21,13 @@ from rest_framework import routers
 from api.views import (
     LoginView,
     UserSettings,
-    LogoutView
+    LogoutView,
+    TransactionViewSet
     )
 from django.conf.urls.static import static
 
 router = routers.SimpleRouter()
+router.register(r'transactions', TransactionViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

@@ -15,11 +15,9 @@
       <v-layout fill-height align-center row justify-center>
         <v-flex xs3>
           <v-card>
-            <h5 class="text-xs-center pa-2">
-              <img style="height: 60px; margin-top: 2px;"
-             src="/static/imgs/certm2.png"
-             alt="avatar">
-            </h5>
+            <h1 class="text-xs-center pa-2" style="color: #FF8C00">
+              ANTIFRAUD
+            </h1>
             <br>
             <v-form v-model="valid" class="px-4 pb-2" @submit.prevent="submit">
               <v-text-field
