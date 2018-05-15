@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <v-flex xs3>
         <v-text-field
-          label="Subject"
+          label=""
           v-model="subject"
           @keyup.enter="submit"
         ></v-text-field>

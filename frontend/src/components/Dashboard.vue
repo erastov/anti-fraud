@@ -66,13 +66,11 @@
           :items="items"
           :disable-initial-sort="true"
           hide-actions
+          hide-headers
           class="elevation-1"
           dark
         >
           <template slot="items" slot-scope="props">
-            <td>{{ props.item.time }}</td>
-            <td>{{ props.item.amount }}</td>
-            <td>{{ props.item.score }}</td>
             <td>
               <v-tooltip v-if="props.item.status === 'Approve'" right>
                 <v-icon slot="activator" color="green">lens</v-icon>
@@ -87,6 +85,9 @@
                 Lock
               </v-tooltip>
             </td>
+            <td>{{ props.item.time }}</td>
+            <td>{{ props.item.amount }}</td>
+            <td>{{ props.item.score }}</td>
           </template>
         </v-data-table>
       </v-flex>
@@ -115,10 +116,10 @@
       timestamps: [],
       amounts: [],
       headers: [
+        {text: 'Status', value: 'status'},
         {text: 'Time', value: 'time'},
         {text: 'Amount', value: 'amount'},
-        {text: 'Score', value: 'score'},
-        {text: 'Status', value: 'status'}
+        {text: 'Score', value: 'score'}
       ],
       items: []
     }),

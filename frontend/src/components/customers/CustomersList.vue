@@ -2,91 +2,78 @@
   <v-container grid-list-md text-xs-center>
     <v-layout row wrap>
       <v-flex xs12>
-        <search-bar-cust></search-bar-cust>
-      </v-flex>
-      <v-flex xs12>
+        <v-card>
+        <v-card-title>
+          Customers
+          <v-spacer></v-spacer>
+          <v-text-field
+            v-model="search"
+            append-icon="search"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-card-title>
         <v-data-table
           :headers="headers"
           :items="items"
+          :search="search"
+          :disable-initial-sort="true"
           class="elevation-1"
         >
-          <template slot="headerCell" slot-scope="props">
-            <v-tooltip bottom>
-        <span slot="activator">
-          {{ props.header.text }}
-        </span>
-              <span>
-          {{ props.header.text }}
-        </span>
-            </v-tooltip>
-          </template>
           <template slot="items" slot-scope="props">
-            <td>{{ props.item.name }}</td>
-            <td class="text-xs-right">{{ props.item.calories }}</td>
-            <td class="text-xs-right">{{ props.item.fat }}</td>
-            <td class="text-xs-right">{{ props.item.carbs }}</td>
-            <td class="text-xs-right">{{ props.item.protein }}</td>
-            <td class="text-xs-right">{{ props.item.iron }}</td>
+            <td class="text-xs-left">{{ props.item.first_name }}</td>
+            <td class="text-xs-left">{{ props.item.last_name }}</td>
+            <td class="text-xs-left">{{ props.item.age }}</td>
+            <td class="text-xs-left">{{ props.item.city }}</td>
+            <td class="text-xs-left">{{ props.item.address }}</td>
+            <td class="text-xs-left">{{ props.item.reputation_score }}</td>
+            <td class="justify-center layout px-0">
+              <v-btn icon class="mx-0" @click="deleteItem(props.item)">
+                <v-icon color="blue">info</v-icon>
+              </v-btn>
+            </td>
           </template>
+          <v-alert slot="no-results" :value="true" color="error" icon="warning">
+            Your search for "{{ search }}" found no results.
+          </v-alert>
         </v-data-table>
+        </v-card>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-  import SearchBarCust from '../search/SearchBarCust'
+  import SearchBarTrans from '../search/SearchBarTrans'
+  import axios from 'axios'
 
   export default {
-    name: 'Customers',
+    name: 'Transactions',
     components: {
-      SearchBarCust
+      SearchBarTrans
     },
     data: function () {
       return {
         headers: [
-          {
-            text: 'Dessert (100g serving)',
-            align: 'left',
-            sortable: false,
-            value: 'name'
-          },
-          { text: 'Calories', value: 'calories' },
-          { text: 'Fat (g)', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Iron (%)', value: 'iron' }
+          {text: 'First name', value: 'first_name'},
+          {text: 'Last name', value: 'last_name'},
+          {text: 'Age', value: 'age'},
+          {text: 'City', value: 'city'},
+          {text: 'Address', value: 'address'},
+          {text: 'Reputation score', value: 'reputation_score'},
+          {text: 'Info', value: 'id', sortable: false}
         ],
-        items: [
-          {
-            value: false,
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            iron: '1%'
-          },
-          {
-            value: false,
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: '1%'
-          },
-          {
-            value: false,
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            iron: '7%'
-          }
-        ]
+        items: [],
+        search: ''
       }
+    },
+    created() {
+      axios.get('/api/customers/')
+        .then(response => {
+          let transactions = response.data
+          this.items = transactions.reverse()
+        })
     }
   }
 </script>
