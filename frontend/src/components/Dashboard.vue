@@ -88,6 +88,17 @@
             <td>{{ props.item.time }}</td>
             <td>{{ props.item.amount }}</td>
             <td>{{ props.item.score }}</td>
+            <td class="justify-center layout px-0">
+              <v-btn icon class="mx-0" @click="editItem(props.item)">
+                <v-icon color="orange">report</v-icon>
+              </v-btn>
+              <v-btn icon class="mx-0" @click="deleteItem(props.item)">
+                <v-icon color="red">block</v-icon>
+              </v-btn>
+              <v-btn icon class="mx-0" @click="deleteItem(props.item)">
+                <v-icon color="blue">info</v-icon>
+              </v-btn>
+            </td>
           </template>
         </v-data-table>
       </v-flex>
@@ -119,7 +130,8 @@
         {text: 'Status', value: 'status'},
         {text: 'Time', value: 'time'},
         {text: 'Amount', value: 'amount'},
-        {text: 'Score', value: 'score'}
+        {text: 'Score', value: 'score'},
+        {text: 'Actions', value: 'id', sortable: false}
       ],
       items: []
     }),
@@ -180,7 +192,7 @@
             labels: this.timestamps,
             datasets: [
               {
-                label: 'Amount',
+                label: 'Amount (by hour)',
                 backgroundColor: 'rgba(84, 242, 255, 0.5)',
                 data: this.amounts
               }
@@ -190,7 +202,7 @@
             labels: this.timestamps,
             datasets: [
               {
-                label: 'Amount',
+                label: 'Amount (by week)',
                 backgroundColor: 'rgba(255, 84, 87, 0.5)',
                 data: this.amounts
               }
@@ -200,7 +212,7 @@
             labels: this.timestamps,
             datasets: [
               {
-                label: 'Amount',
+                label: 'Amount (by month)',
                 backgroundColor: 'rgba(100, 255, 104, 0.5)',
                 data: this.amounts
               }

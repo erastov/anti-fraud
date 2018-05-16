@@ -49,7 +49,7 @@
                 <v-icon color="red">block</v-icon>
               </v-btn>
               <v-btn icon class="mx-0" @click="deleteItem(props.item)">
-                <v-icon color="blue">info</v-icon>
+                <dialog-cert-info :cert="data.row"></dialog-cert-info>
               </v-btn>
             </td>
           </template>
