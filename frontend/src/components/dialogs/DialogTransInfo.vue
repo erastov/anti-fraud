@@ -106,6 +106,12 @@
         source_account: '8458b586-c37d-40e4-a91d-922704545806',
         destination_account: 'c488f127-4ba8-4d66-a113-3dd1ff96688a'
       }
+    },
+    methods: {
+      blockTrans: function () {
+      },
+      holdTrans: function () {
+      }
     }
   }
 </script>

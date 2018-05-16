@@ -42,7 +42,7 @@ export default new Router({
       component: CustomersList
     },
     {
-      path: '/customer',
+      path: '/customers/:id',
       component: CustomerDetail
     },
     {

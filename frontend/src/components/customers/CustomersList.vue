@@ -29,7 +29,7 @@
             <td class="text-xs-left">{{ props.item.address }}</td>
             <td class="text-xs-left">{{ props.item.reputation_score }}</td>
             <td class="justify-center layout px-0">
-              <v-btn icon class="mx-0" @click="deleteItem(props.item)">
+              <v-btn icon class="mx-0" v-on:click="$router.push(`/customers/${props.item.id}`)">
                 <v-icon color="blue">info</v-icon>
               </v-btn>
             </td>
