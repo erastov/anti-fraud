@@ -89,15 +89,9 @@
             <td>{{ props.item.amount }}</td>
             <td>{{ props.item.score }}</td>
             <td class="justify-center layout px-0">
-              <v-btn icon class="mx-0" @click="editItem(props.item)">
-                <v-icon color="orange">report</v-icon>
-              </v-btn>
-              <v-btn icon class="mx-0" @click="deleteItem(props.item)">
-                <v-icon color="red">block</v-icon>
-              </v-btn>
-              <v-btn icon class="mx-0" @click="deleteItem(props.item)">
-                <v-icon color="blue">info</v-icon>
-              </v-btn>
+              <dialog-trans-hold :id="props.item.id"></dialog-trans-hold>
+              <dialog-trans-block :id="props.item.id"></dialog-trans-block>
+              <dialog-trans-info :id="props.item.id"></dialog-trans-info>
             </td>
           </template>
         </v-data-table>
@@ -108,6 +102,9 @@
 
 <script>
   import LineChart from './charts/LineChart'
+  import DialogTransInfo from './dialogs/DialogTransInfo'
+  import DialogTransBlock from './dialogs/DialogTransBlock'
+  import DialogTransHold from './dialogs/DialogTransHold'
   import Pusher from 'pusher-js'
   import axios from 'axios'
 
@@ -119,7 +116,12 @@
 
   export default {
     name: "dashboard",
-    components: {LineChart},
+    components: {
+      LineChart,
+      DialogTransInfo,
+      DialogTransBlock,
+      DialogTransHold
+    },
     data: () => ({
       datacollection: null,
       datacollection2: null,

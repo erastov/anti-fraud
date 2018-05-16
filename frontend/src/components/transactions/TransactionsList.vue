@@ -42,15 +42,9 @@
             <td class="text-xs-left">{{ props.item.amount }}</td>
             <td class="text-xs-left">{{ props.item.score }}</td>
             <td class="justify-center layout px-0">
-              <v-btn icon class="mx-0" @click="editItem(props.item)">
-                <v-icon color="orange">report</v-icon>
-              </v-btn>
-              <v-btn icon class="mx-0" @click="deleteItem(props.item)">
-                <v-icon color="red">block</v-icon>
-              </v-btn>
-              <v-btn icon class="mx-0" @click="deleteItem(props.item)">
-                <dialog-cert-info :cert="data.row"></dialog-cert-info>
-              </v-btn>
+              <dialog-trans-hold :id="props.item.id"></dialog-trans-hold>
+              <dialog-trans-block :id="props.item.id"></dialog-trans-block>
+              <dialog-trans-info :id="props.item.id"></dialog-trans-info>
             </td>
           </template>
           <v-alert slot="no-results" :value="true" color="error" icon="warning">
@@ -65,12 +59,18 @@
 
 <script>
   import SearchBarTrans from '../search/SearchBarTrans'
+  import DialogTransInfo from '../dialogs/DialogTransInfo'
+  import DialogTransBlock from '../dialogs/DialogTransBlock'
+  import DialogTransHold from '../dialogs/DialogTransHold'
   import axios from 'axios'
 
   export default {
     name: 'Transactions',
     components: {
-      SearchBarTrans
+      SearchBarTrans,
+      DialogTransInfo,
+      DialogTransBlock,
+      DialogTransHold
     },
     data: function () {
       return {

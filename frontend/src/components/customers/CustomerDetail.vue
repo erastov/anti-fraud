@@ -1,5 +1,5 @@
 <template>
-
+  <p>customer detail</p>
 </template>
 
 <script>
