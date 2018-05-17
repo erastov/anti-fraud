@@ -152,9 +152,9 @@
                     <td class="text-xs-left">{{ props.item.balance }}</td>
                     <td class="text-xs-left">{{ props.item.credit }}</td>
                     <td class="justify-center layout px-0">
-                      <dialog-trans-hold :item="props.item"></dialog-trans-hold>
-                      <dialog-trans-block :item="props.item"></dialog-trans-block>
-                      <dialog-trans-info :id="props.item.id"></dialog-trans-info>
+                      <dialog-account-hold :item="props.item"></dialog-account-hold>
+                      <dialog-account-block :item="props.item"></dialog-account-block>
+                      <dialog-account-info :id="props.item.id"></dialog-account-info>
                     </td>
                   </template>
                 </v-data-table>
@@ -169,18 +169,18 @@
 
 <script>
   import LineChart from '../charts/LineChart'
-  import DialogTransInfo from '../dialogs/DialogTransInfo'
-  import DialogTransBlock from '../dialogs/DialogTransBlock'
-  import DialogTransHold from '../dialogs/DialogTransHold'
+  import DialogAccountInfo from '../dialogs/DialogAccountInfo'
+  import DialogAccountBlock from '../dialogs/DialogAccountBlock'
+  import DialogAccountHold from '../dialogs/DialogAccountHold'
   import axios from 'axios'
 
   export default {
     name: 'CustomerDetail',
     components: {
       LineChart,
-      DialogTransInfo,
-      DialogTransBlock,
-      DialogTransHold
+      DialogAccountInfo,
+      DialogAccountBlock,
+      DialogAccountHold
     },
     data: function () {
       return {

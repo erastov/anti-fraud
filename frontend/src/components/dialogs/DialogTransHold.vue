@@ -9,7 +9,7 @@
     <v-dialog v-model="dialog" max-width="500px" scrollable>
       <v-card>
         <v-card-title>
-          Hold transaction
+          Transaction hold
           <v-spacer></v-spacer>
           <v-btn icon @click.native="dialog = false">
             <v-icon color="grey">close</v-icon>
@@ -34,7 +34,7 @@
 <script>
   export default {
     props: ['item'],
-    name: 'dialog-trans-info',
+    name: 'dialog-trans-hold',
     data: function () {
       return {
         dialog: false

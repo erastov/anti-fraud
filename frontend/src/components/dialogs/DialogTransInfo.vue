@@ -96,7 +96,7 @@
 <script>
   export default {
     props: ['id'],
-    name: 'dialog-trans-hold',
+    name: 'dialog-trans-info',
     data: function () {
       return {
         dialog: false,
