@@ -134,24 +134,23 @@
                 >
                   <template slot="items" slot-scope="props">
                     <td>
-                      <v-tooltip v-if="props.item.status === 'Approve'" right>
+                      <v-tooltip v-if="props.item.status === 'Active'" right>
                         <v-icon slot="activator" color="green">lens</v-icon>
-                        Approve
+                        Active
                       </v-tooltip>
-                      <v-tooltip v-if="props.item.status === 'Hold'" right>
+                      <v-tooltip v-if="props.item.status === 'Frozen'" right>
                         <v-icon slot="activator" color="yellow">lens</v-icon>
-                        Hold
+                        Frozen
                       </v-tooltip>
-                      <v-tooltip v-if="props.item.status === 'Lock'" right>
+                      <v-tooltip v-if="props.item.status === 'Block'" right>
                         <v-icon slot="activator" color="red">lens</v-icon>
-                        Lock
+                        Block
                       </v-tooltip>
                     </td>
-                    <td class="text-xs-left">{{ props.item.time }}</td>
-                    <td class="text-xs-left">{{ props.item.source_customer }}</td>
-                    <td class="text-xs-left">{{ props.item.destination_customer }}</td>
-                    <td class="text-xs-left">{{ props.item.amount }}</td>
-                    <td class="text-xs-left">{{ props.item.score }}</td>
+                    <td class="text-xs-left">{{ props.item.type }}</td>
+                    <td class="text-xs-left">{{ props.item.currency }}</td>
+                    <td class="text-xs-left">{{ props.item.balance }}</td>
+                    <td class="text-xs-left">{{ props.item.credit }}</td>
                     <td class="justify-center layout px-0">
                       <dialog-trans-hold :id="props.item.id"></dialog-trans-hold>
                       <dialog-trans-block :id="props.item.id"></dialog-trans-block>
@@ -193,13 +192,12 @@
         timestamps: [],
         amounts: [],
         headers: [
-          {text: 'Status', value: 'status', sortable: false},
-          {text: 'Time', value: 'time'},
-          {text: 'Source', value: 'source_customer'},
-          {text: 'Destination', value: 'destination_customer'},
-          {text: 'Amount', value: 'amount'},
-          {text: 'Score', value: 'score'},
-          {text: 'Actions', value: 'id', sortable: false}
+          {text: 'Status', value: 'status'},
+          {text: 'Type', value: 'type'},
+          {text: 'Currency', value: 'currency'},
+          {text: 'Balance', value: 'balance'},
+          {text: 'Credit', value: 'credit'},
+          {text: 'Actions', value: 'id'}
         ],
         items: []
       }
@@ -210,7 +208,6 @@
           let transactions = response.data
           this.timestamps = transactions.map(t => t.time)
           this.amounts = transactions.map(t => t.amount)
-          this.items = transactions.reverse().slice(0, 3)
 
           this.datacollection = {
             labels: this.timestamps,
@@ -222,6 +219,10 @@
               }
             ]
           }
+        })
+      axios.get('/api/accounts/')
+        .then(response => {
+          this.items = response.data
         })
     }
   }

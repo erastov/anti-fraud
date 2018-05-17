@@ -23,13 +23,15 @@ from api.views import (
     UserSettings,
     LogoutView,
     TransactionViewSet,
-    CustomerViewSet
+    CustomerViewSet,
+    AccountViewSet
     )
 from django.conf.urls.static import static
 
 router = routers.SimpleRouter()
 router.register(r'transactions', TransactionViewSet)
 router.register(r'customers', CustomerViewSet)
+router.register(r'accounts', AccountViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

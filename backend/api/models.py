@@ -55,7 +55,13 @@ class Currency(models.Model):
 
 class Account(models.Model):
 
+    STATUS_CHOICES = (
+        ('A', 'Active'),
+        ('B', 'Block'),
+        ('F', 'Frozen'),
+    )
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES)
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
     balance = models.DecimalField(max_digits=20, decimal_places=2)
     type = models.ForeignKey(AccountType, on_delete=models.PROTECT)

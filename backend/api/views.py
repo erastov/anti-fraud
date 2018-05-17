@@ -4,11 +4,11 @@ from django.contrib.auth import authenticate, login, logout
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import viewsets, views
-from .serializers import UserSerializer, TransactionSerializer, CustomerSerializer
+from .serializers import UserSerializer, TransactionSerializer, CustomerSerializer, AccountSerializer
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .signals import Pusher
-from .models import Transaction, Customer
+from .models import Transaction, Customer, Account
 
 pusher = Pusher()
 
@@ -31,6 +31,13 @@ class CustomerViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, ]
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
+
+
+class AccountViewSet(viewsets.ModelViewSet):
+
+    permission_classes = [IsAuthenticated, ]
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
 
 
 class LoginView(views.APIView):
