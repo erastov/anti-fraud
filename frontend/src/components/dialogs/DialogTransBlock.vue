@@ -16,13 +16,16 @@
           </v-btn>
         </v-card-title>
         <v-card-text>
-          <h2 class="text-xs-center">{{ id }}</h2>
+          <h2 class="text-xs-center">{{ item.source_customer }} -> {{ item.destination_customer }}</h2>
+          <h1 class="text-xs-center">{{ item.amount }}</h1>
         </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn round color="red" dark @click="blockTrans">Block</v-btn>
-          <v-btn round color="primary" flat @click="dialog=false">Close</v-btn>
-        </v-card-actions>
+        <div style="padding-bottom: 15px;">
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn round color="red" dark @click="blockTrans">Block</v-btn>
+            <v-btn round color="primary" flat @click="dialog=false">Close</v-btn>
+          </v-card-actions>
+        </div>
       </v-card>
     </v-dialog>
   </div>
@@ -30,7 +33,7 @@
 
 <script>
   export default {
-    props: ['id'],
+    props: ['item'],
     name: 'dialog-trans-block',
     data: function () {
       return {

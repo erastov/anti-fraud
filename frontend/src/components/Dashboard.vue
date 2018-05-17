@@ -89,8 +89,8 @@
             <td>{{ props.item.amount }}</td>
             <td>{{ props.item.score }}</td>
             <td class="justify-center layout px-0">
-              <dialog-trans-hold :id="props.item.id"></dialog-trans-hold>
-              <dialog-trans-block :id="props.item.id"></dialog-trans-block>
+              <dialog-trans-hold :item="props.item"></dialog-trans-hold>
+              <dialog-trans-block :item="props.item"></dialog-trans-block>
               <dialog-trans-info :id="props.item.id"></dialog-trans-info>
             </td>
           </template>

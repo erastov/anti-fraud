@@ -152,14 +152,11 @@
                     <td class="text-xs-left">{{ props.item.balance }}</td>
                     <td class="text-xs-left">{{ props.item.credit }}</td>
                     <td class="justify-center layout px-0">
-                      <dialog-trans-hold :id="props.item.id"></dialog-trans-hold>
-                      <dialog-trans-block :id="props.item.id"></dialog-trans-block>
+                      <dialog-trans-hold :item="props.item"></dialog-trans-hold>
+                      <dialog-trans-block :item="props.item"></dialog-trans-block>
                       <dialog-trans-info :id="props.item.id"></dialog-trans-info>
                     </td>
                   </template>
-                  <v-alert slot="no-results" :value="true" color="error" icon="warning">
-                    Your search for "{{ search }}" found no results.
-                  </v-alert>
                 </v-data-table>
               </v-card>
             </v-flex>

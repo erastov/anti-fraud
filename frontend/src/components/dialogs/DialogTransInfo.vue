@@ -80,8 +80,8 @@
             </v-layout>
           </v-container>
         </v-card-text>
-        <div style="padding-bottom: 20px;">
-          <v-card-actions style="padding-bottom: 10px;">
+        <div style="padding-bottom: 15px;">
+          <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn round color="orange" dark @click="holdTrans">Hold</v-btn>
             <v-btn round color="red" dark @click="blockTrans">Block</v-btn>
