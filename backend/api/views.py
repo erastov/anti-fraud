@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import viewsets, views
+from rest_framework import viewsets, mixins, views
 from .serializers import UserSerializer, TransactionSerializer, CustomerSerializer, AccountSerializer
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -19,21 +19,29 @@ def service_post_save(sender, instance, **kwargs):
     pusher.send_message(serializer.data)
 
 
-class TransactionViewSet(viewsets.ModelViewSet):
+class TransactionViewSet(mixins.RetrieveModelMixin,
+                         mixins.UpdateModelMixin,
+                         mixins.ListModelMixin,
+                         viewsets.GenericViewSet):
 
     permission_classes = [IsAuthenticated, ]
     queryset = Transaction.objects.all().order_by('time')
     serializer_class = TransactionSerializer
 
 
-class CustomerViewSet(viewsets.ModelViewSet):
+class CustomerViewSet(mixins.RetrieveModelMixin,
+                      mixins.ListModelMixin,
+                      viewsets.GenericViewSet):
 
     permission_classes = [IsAuthenticated, ]
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
 
 
-class AccountViewSet(viewsets.ModelViewSet):
+class AccountViewSet(mixins.RetrieveModelMixin,
+                     mixins.UpdateModelMixin,
+                     mixins.ListModelMixin,
+                     viewsets.GenericViewSet):
 
     permission_classes = [IsAuthenticated, ]
     queryset = Account.objects.all()

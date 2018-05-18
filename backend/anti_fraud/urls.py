@@ -27,6 +27,9 @@ from api.views import (
     AccountViewSet
     )
 from django.conf.urls.static import static
+from rest_framework_swagger.views import get_swagger_view
+
+schema_view = get_swagger_view(title='Pastebin API')
 
 router = routers.SimpleRouter()
 router.register(r'transactions', TransactionViewSet)
@@ -39,7 +42,7 @@ urlpatterns = [
     url(r'^api/login/$', LoginView.as_view()),
     url(r'^api/logout$', LogoutView.as_view()),
     url(r'^api/user-settings/$', UserSettings.as_view()),
-
+    url(r'^swagger/$', schema_view)
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
