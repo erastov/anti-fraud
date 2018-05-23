@@ -16,10 +16,10 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/dashboard'
-      // meta: {
-      //   roles: ['authenticated']
-      // }
+      redirect: '/dashboard',
+      meta: {
+        roles: ['authenticated']
+      }
     },
     {
       path: '/login',
@@ -27,27 +27,45 @@ export default new Router({
     },
     {
       path: '/dashboard',
-      component: Dashboard
+      component: Dashboard,
+      meta: {
+        roles: ['authenticated']
+      }
     },
     {
       path: '/transactions',
-      component: TransactionsList
+      component: TransactionsList,
+      meta: {
+        roles: ['authenticated']
+      }
     },
     {
       path: '/transaction',
-      component: TransactionDetail
+      component: TransactionDetail,
+      meta: {
+        roles: ['authenticated']
+      }
     },
     {
       path: '/customers',
-      component: CustomersList
+      component: CustomersList,
+      meta: {
+        roles: ['authenticated']
+      }
     },
     {
       path: '/customers/:id',
-      component: CustomerDetail
+      component: CustomerDetail,
+      meta: {
+        roles: ['authenticated']
+      }
     },
     {
       path: '/settings',
-      component: SettingsPanel
+      component: SettingsPanel,
+      meta: {
+        roles: ['authenticated']
+      }
     },
     {
       path: '/forbidden',
